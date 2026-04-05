@@ -1,18 +1,19 @@
 menu = {}
-def hitung(harga,uang,menu,pilihan):
+def hitung(harga, uang, menu, pilihan, total_belanja):
     if uang < harga:
-            print("Uang sudah tidak cukup")
-            return uang
+        print("Uang sudah tidak cukup")
+        return uang, total_belanja
     else:
         uang -= harga
+        total_belanja += harga
+
         if pilihan in menu:
             menu[pilihan][0] += 1
             menu[pilihan][1] += harga
         else:
-            menu[pilihan] = [0,0]
-            menu[pilihan][0] = 1
-            menu[pilihan][1] = harga
-        return uang
+            menu[pilihan] = [1, harga]
+
+        return uang, total_belanja
     
 def cek(uang,menu):
     print("----------------")
@@ -22,15 +23,16 @@ def cek(uang,menu):
     print("----------------")
     print(f"Sisa uang: {uang}")
 
-def bill(uang,menu):
+def bill(uang, menu, total_belanja):
     print("-----------------------------------------")
     print("BILL:")
     for x in menu:
         print(f"{x}  {menu[x][0]}x : {menu[x][1]}") 
     print("-----------------------------------------")
+    print(f"TOTAL: {total_belanja}")
     print(f"KEMBALIAN: {uang}")
 
-def pilih(uang):
+def pilih(uang, total_belanja):
     
     while True:
         try:
@@ -40,11 +42,11 @@ def pilih(uang):
         if pilih == 1:
             pilihan = "Fanta"
             harga = 7000
-            uang = hitung(harga,uang,menu,pilihan)
+            uang, total_belanja = hitung(harga, uang, menu, pilihan, total_belanja)
             cek(uang,menu)
             keluar = input("Mau menambah?(y/n):")
             if keluar == "n":
-                bill(uang,menu)
+                bill(uang, menu, total_belanja)
                 break
             elif keluar == "y":
                 continue
@@ -54,11 +56,11 @@ def pilih(uang):
         elif pilih == 2:
             pilihan = "Teh Pucuk"
             harga = 5000
-            uang = hitung(harga,uang,menu,pilihan)
+            uang, total_belanja = hitung(harga, uang, menu, pilihan, total_belanja)
             cek(uang,menu)
             keluar = input("Mau menambah?(y/n):")
             if keluar == "n":
-                bill(uang,menu)
+                bill(uang, menu, total_belanja)
             elif keluar == "y":
                 continue
             else:
@@ -66,11 +68,11 @@ def pilih(uang):
         elif pilih == 3:
             pilihan = "Air Aqua"
             harga = 3000
-            uang = hitung(harga,uang,menu,pilihan)
+            uang, total_belanja = hitung(harga, uang, menu, pilihan, total_belanja)
             cek(uang,menu)
             keluar = input("Mau menambah?(y/n):")
             if keluar == "n":
-                bill(uang,menu)
+                bill(uang, menu, total_belanja)
                 break
             elif keluar == "y":
                 continue
@@ -79,11 +81,11 @@ def pilih(uang):
         elif pilih == 4:
             pilihan = "Nescafe"
             harga = 10000
-            uang = hitung(harga,uang,menu,pilihan)
+            uang, total_belanja = hitung(harga, uang, menu, pilihan, total_belanja)
             cek(uang,menu)
             keluar = input("Mau menambah?(y/n):")
             if keluar == "n":
-                bill(uang,menu)
+                bill(uang, menu, total_belanja)
                 break
             elif keluar == "y":
                 continue
@@ -92,11 +94,11 @@ def pilih(uang):
         elif pilih == 5:
             pilihan = "Indomilk"
             harga = 7500
-            uang = hitung(harga,uang,menu,pilihan)
+            uang, total_belanja = hitung(harga, uang, menu, pilihan, total_belanja)
             cek(uang,menu)
             keluar = input("Mau menambah?(y/n):")
             if keluar == "n":
-                bill(uang,menu)
+                bill(uang, menu, total_belanja)
                 break
             elif keluar == "y":
                 continue
@@ -111,6 +113,7 @@ def pilih(uang):
 while True:
     try:
         uang = int(input("Berapa Uangnya:"))
+        total_belanja = 0
     except:
         print("Plihan harus berupa angka")
     print("[PILIH MENU]")
@@ -119,6 +122,4 @@ while True:
     print("3. AIR AQUA Rp 3.000")
     print("4. NESCAFE Rp 10.000")
     print("5. INDOMILK Rp 7.500")
-    pilih (uang)
-    
-#Kalau ada kekurangan tolong kasih saran pak :)
+    pilih(uang, total_belanja)
